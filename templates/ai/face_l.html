@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <canvas id="canvasCemara" width="500" height="500"></canvas>
+<video autoplay="" id="video2" style="width:500px;height:500px;"></video>
+<button id="btn" >拍摄</button>
+
+<form action="{% url 'live' %}" method="post" id="img_form">
+    {% csrf_token %}
+      <input type="hidden" id="img_inp" name="pic">
+      <input type="submit" id="btn02">提交</input>
+  </form>
+
+  <script>
+var video = document.getElementById('video2');
+var constraints = {audio: false, video: true};
+ function successCallback(stream) {
+     video.srcObject = stream;
+     video.play();
+ }
+ function errorCallback(error) {
+     console.log("navigator.getUserMedia error: ", error);
+     $(".CameraTips").show();
+ }
+navigator.mediaDevices.getUserMedia(constraints)
+     .then(successCallback)
+     .catch(errorCallback);
+
+document.getElementById("btn").addEventListener("click", function () {
+    var video = document.getElementById('video2');
+    canvas = document.getElementById('canvasCemara');
+    ctx = canvas.getContext('2d');
+    var _w = 624, _h = 468;
+    if (video.videoWidth > 0) _h = video.videoHeight / (video.videoWidth / _w);
+    canvas.setAttribute('width', _w);
+    canvas.setAttribute('height', _h);
+    ctx.fillRect(0, 0, _w, _h);
+    ctx.drawImage(video, 0, 0, _w, _h);
+});
+document.getElementById("btn02").addEventListener("click", function () {
+    var img_data=document.getElementById("canvasCemara");
+    var img_base=img_data.toDataURL("image/jpeg");
+    document.getElementById("img_inp").value=img_base;
+})
+</script>
+</body>
+</html>
+
+

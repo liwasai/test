@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="{{ MEDIA_URL }}{{ a.author.head }}" style="width: 20px;height: 20px;">
+    {{ a.author.name }}<br>
+    {{ a.title }}<br>
+    {{ a.con }}<br>
+
+    {% for i in b %}
+        <div>
+            {{ i.c_user.name }}:<br>{{ i.write }}<br>{{ i.good_num }}
+            <form method="post">
+                <input type="text" name="in4">
+                <input type="hidden" value="{{ i.pk }}" name="in5">
+                <input type="submit" value="回复">
+            </form>
+            <form method="post">
+                <input type="hidden" value="{{ i.pk }}" name="in6">
+                <input type="submit" value="赞">
+            </form>
+
+            {% for j in i.reply_set.all %}
+                {{ j.r_user.name }}:<br>{{ j.write_con }}
+            {% endfor %}
+
+        </div>
+
+    {% endfor %}
+
+<form method="post">
+    <input type="text" name="con">
+    <input type="submit" value="确定">
+</form>
+
+{{ yes }}
+</body>
+</html>

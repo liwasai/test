@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>many</title>
+</head>
+<body>
+
+<form action="{% url 'many' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>脸1</td>
+            <td><input type="file" name="face1"></td>
+        </tr>
+        <tr>
+            <td>脸2</td>
+            <td><input type="file" name="face2"></td>
+        </tr>
+        <tr>
+            <td>脸3</td>
+            <td><input type="file" name="face3"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit"></td>
+        </tr>
+    </table>
+</form>
+
+
+</body>
+</html>
